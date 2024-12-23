@@ -8,6 +8,7 @@ from rest_framework.authtoken.models import Token
 from .models import ConfirmationCode
 
 
+
 @api_view(['POST'])
 def confirm_user_api_view(request):
     username = request.data.get('username')

@@ -1,7 +1,3 @@
-from itertools import product
-
-from django.core.serializers import serialize
-from django.forms import model_to_dict
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,6 +5,45 @@ from .models import Movie, Director, Review
 from .serializers import MovieSerializer, DirectorSerializer, ReviewSerializer, MovieReviewSerializer
 from .serializers import MovieValidateSerializer, DirectorValidateSerializer, ReviewValidateSerializer
 from .serializers import MovieUpdateSerializer, DirectorUpdateSerializer, ReviewUpdateSerializer
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+
+
+# Review List API View with class
+class ReviewListAPIView(ListAPIView):
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+    paginate_by = 3
+
+class ReviewDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+    lookup_field = 'id'
+
+
+# Director List API View with class
+class DirectorListAPIView(ListAPIView):
+    serializer_class = DirectorSerializer
+    queryset = Director.objects.all()
+    paginate_by = 3
+
+class DirectorDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = DirectorSerializer
+    queryset = Director.objects.all()
+    lookup_field = 'id'
+
+
+# Movie List API View with class
+class MovieListAPIView(ListCreateAPIView):
+    serializer_class = MovieSerializer
+    queryset = Movie.objects.all()
+    paginate_by = 3
+
+
+class MovieDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = MovieSerializer
+    queryset = Movie.objects.all()
+    lookup_field = 'id'
+
 
 # Movie List API View
 @api_view(http_method_names=['GET', 'POST'])
